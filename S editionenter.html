@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>S</title>
+<link rel="stylesheet" href="style.css">
+</head>
+<body>
+<div class="scene">
+    <div class="ms"></div>
+    <div class="doors">
+        <img class="door" draggable="false" src="https://i.postimg.cc/QxmcgTs4/image.png">
+    </div>
+</div>
+<p id='n'></p>
+<script>
+const door = document.querySelector(".door");
+const scene = document.querySelector(".scene");
+let p = document.getElementById("n")
+let q = ['"S-S=0','"SSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSS', '"Sigma - S', '"S"']
+p.innerText = q[Math.floor(Math.random() * q.length)]
+wave(p, 8, 0.2, 0.05);
+
+door.addEventListener("click", () => {
+    // открываем дверь
+    door.style.animation = "open 0.8s ease forwards";
+    p.style.opacity = '0'
+
+    // через секунду масштабируем весь контейнер
+    setTimeout(() => {
+        scene.style.transition = "1s ease";
+        scene.style.transform = "scale(5)";
+        scene.style.filter = "brightness(5) saturate(1)";
+        scene.style.opacity = '0';
+        setTimeout(() => { location.href = "S edition.html" }, 500)
+    }, 1050);
+})
+
+function wave(p, a = 10, f = 0.05, s = 0.05) {
+    const text = p.textContent;
+    p.textContent = '';
+    const spans = [];
+    for (let char of text) {
+        const span = document.createElement('span');
+        span.textContent = char;
+        p.appendChild(span);
+        spans.push(span);
+    }
+    let time = 0;
+    function animate() {
+        spans.forEach((span, i) => {
+            span.style.transform = `translateY(${Math.sin(time + i * f) * a}px)`;
+        });
+        time += s;
+        requestAnimationFrame(animate);
+    }
+    animate();
+}
+</script>
+</body>
+</html>

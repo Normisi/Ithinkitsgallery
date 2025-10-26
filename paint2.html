@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>ithinkitsgallery</title>
+  <link rel="stylesheet" href="gallery.css">
+  </head>
+<body>
+  <main>
+  <div class="recipe-page">
+    
+      <div class="back-wrapper">
+    <a href="ithinkitsgallery.html" class="back-button">← Назад</a>
+  </div>
+   <div class="gallery-container">
+    <div class="gallery-image">
+      <img class="grassy" src="https://img.goodfon.ru/wallpaper/big/d/b4/trava-zelen-tekstury-tekstura-travy-priroda.webp" alt="Картина">
+    </div>
+
+    <div class="gallery-info">
+      <h1>«Трава»</h1>
+      <p><strong>Автор: Xiaomi 14 Ultra 12GB RAM 512GB Storage 200MP Leica Quad Camera Edition</strong> </p>
+      <p> Це просто трава.<br> доторкнися до трави.<br> доторкнися до трави.<br> це корисно.<br> трави.<br> доторкнися до трави
+</p>
+    </div>
+  </div>
+  </main>
+ <div class="footer-btn" id="footerBtn">
+    Про нас
+  </div>
+
+ 
+  <div class="footer-overlay" id="footerOverlay">
+    <h2>Доторкнися до трави у стимі!</h2>
+  <img src="https://i.postimg.cc/mk9dG1rb/image.png" alt="steam">
+ 
+
+    <button id="closeFooter">Закрити</button>
+  </div>
+  
+<script>
+
+  const footerBtn = document.getElementById("footerBtn");
+  const footerOverlay = document.getElementById("footerOverlay");
+  const closeBtn = document.getElementById("closeFooter");
+
+  footerBtn.addEventListener("click", () => {
+    footerOverlay.classList.add("active");
+  });
+
+  closeBtn.addEventListener("click", () => {
+    footerOverlay.classList.remove("active");
+  });
+
+  // Картинка травы - смена при клике
+  const grassImage = document.getElementById("grassImage");
+  const images = [
+    "https://img.goodfon.ru/wallpaper/big/d/b4/trava-zelen-tekstury-tekstura-travy-priroda.webp",
+    "https://images.unsplash.com/photo-1501004318641-b39e6451bec6?auto=format&fit=crop&w=500&q=60",
+    "https://images.unsplash.com/photo-1506744038136-46273834b3fb?auto=format&fit=crop&w=500&q=60"
+  ];
+
+  let index = 0;
+  grassImage.addEventListener("click", () => {
+    index = (index + 1) % images.length;
+    grassImage.src = images[index];
+  });
+</script>
+</body>
+</html>

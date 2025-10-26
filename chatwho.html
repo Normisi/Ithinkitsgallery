@@ -1,0 +1,156 @@
+<!DOCTYPE html>
+<html lang="uk">
+<head>
+  <meta charset="UTF-8">
+  <title>Ithinkitschatbot</title>
+  <link rel="stylesheet" href="gallery.css">
+  <style>
+body {
+  background-image: url(https://png.klev.club/uploads/posts/2024-03/png-klev-club-p-myataya-bumaga-png-1.png);
+  background-size: cover;
+  font-family: "Segoe UI", sans-serif;
+  margin: 0;
+  padding: 0;
+}
+
+h1 {
+  text-align: center;
+  margin-top: 20px;
+}
+
+.chat-container {
+  max-width: 700px;
+  height: 70vh;
+  background: rgba(255, 255, 255, 0.9);
+  margin: 40px auto;
+  border-radius: 20px;
+  box-shadow: 0 4px 15px rgba(0,0,0,0.3);
+  display: flex;
+  flex-direction: column;
+  overflow: hidden;
+  position: relative;
+}
+
+.chat-messages {
+  flex: 1;
+  padding: 15px;
+  overflow-y: auto;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.message {
+  max-width: 70%;
+  padding: 10px 15px;
+  border-radius: 15px;
+  line-height: 1.4em;
+  word-wrap: break-word;
+  opacity: 0;
+  transform: translateY(20px);
+  animation: appear 0.3s ease forwards;
+}
+
+@keyframes appear {
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.user {
+  align-self: flex-end;
+  background: #d0ffd4;
+}
+
+.other {
+  align-self: flex-start;
+  background: #fff;
+  border: 1px solid #ccc;
+}
+
+.chat-input {
+  display: flex;
+  border-top: 2px solid #888;
+}
+
+.chat-input input {
+  flex: 1;
+  border: none;
+  padding: 12px;
+  font-size: 16px;
+  border-radius: 0 0 0 20px;
+}
+
+.chat-input button {
+  background: #000;
+  color: white;
+  border: none;
+  padding: 12px 20px;
+  font-size: 16px;
+  border-radius: 0 0 20px 0;
+  cursor: pointer;
+}
+
+.chat-input button:hover {
+  background: #333;
+}
+
+.chat-messages::-webkit-scrollbar {
+  width: 8px;
+}
+.chat-messages::-webkit-scrollbar-thumb {
+  background: #aaa;
+  border-radius: 4px;
+}
+  </style>
+</head>
+<body>
+<div class="back-wrapper">
+    <a href="ithinkitsgallery.html" class="back-button">← Назад</a>
+  </div>
+  
+  <h1>💬 Чат бот! (без ШІ)</h1>
+
+  <div class="chat-container">
+
+    <div class="chat-messages" id="chatMessages">
+    </div>
+
+    <div class="chat-input">
+      <input type="text" id="messageInput" placeholder="Напишіть повідомлення...">
+      <button id="sendBtn">Надіслати</button>
+    </div>
+  </div>
+
+  <script>
+    const chat = document.getElementById("chatMessages");
+    const input = document.getElementById("messageInput");
+    const sendBtn = document.getElementById("sendBtn");
+    const roleToggle = document.getElementById("roleToggle");
+
+    let currentRole = "user";
+
+
+    function addMessage(text, role) {
+      const div = document.createElement("div");
+      div.classList.add("message", role);
+      div.textContent = text;
+      chat.appendChild(div);
+      chat.scrollTop = chat.scrollHeight;
+    }
+
+    sendBtn.addEventListener("click", () => {
+      const text = input.value.trim();
+      if (!text) return;
+      addMessage(text, currentRole);
+      input.value = "";
+    });
+
+    input.addEventListener("keypress", e => {
+      if (e.key === "Enter") sendBtn.click();
+    });
+  </script>
+
+</body>
+</html>
