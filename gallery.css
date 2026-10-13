@@ -133,6 +133,9 @@ h3 {
 .back-wrapper {
   padding: 20px;
 }
+.back-wrapper1 {
+  padding: 40px, 20px;
+}
 .back-button:hover {
   background: url(https://png.klev.club/uploads/posts/2024-03/png-klev-club-p-myataya-bumaga-png-1.png);
 }
