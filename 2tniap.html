@@ -51,7 +51,7 @@
     footerOverlay.classList.remove("active");
   });
   function handleIngredientClick(ingredient) {
-    // Проверяем, не найдено ли слово
+    
     if (localStorage.getItem(`quest_${ingredient}`) !== 'true') {
         localStorage.setItem(`quest_${ingredient}`, 'true');
         alert(`Вы нашли ингредиент: ${ingredient}! 🥳\nEHFFF Z NFR HFL!!!`);
