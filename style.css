@@ -79,12 +79,12 @@ p span {
   z-index: 9999;
 }
 .mobile-warning {
-    display: none; /* Скрываем по умолчанию, JS покажет, если нужно */
+    display: none; 
     position: fixed;
     top: 0;
     left: 0;
     width: 100%;
-    background: #ffc107; /* Желтый фон для привлечения внимания */
+    background: #ffc107;
     color: #333;
     padding: 10px 15px;
     text-align: center;
