@@ -119,8 +119,8 @@ h1 {
     </div>
 
     <div class="chat-input">
-      <input type="text" id="messageInput" placeholder="Напишіть повідомлення...">
-      <button id="sendBtn">Надіслати</button>
+      <input type="text" id="messageInput" placeholder="Напишите что-то...">
+      <button id="sendBtn">Отправить</button>
     </div>
   </div>
 
@@ -131,7 +131,6 @@ h1 {
 
   let currentRole = "user";
 
-  // ключевые слова и ответы
   const keywords = [
     {
       words: ["НЕ", "Улыбка", "улыбка"],
@@ -204,7 +203,6 @@ h1 {
      
       if (words.includes("бедность") || words.includes("БЕДНОСТЬ")) {
         document.body.style.transition = "background-color 3s";
-        document.body.style.backgroundColor = "red";
         setTimeout(() => {
           window.location.href = "index.html"; 
         }, 700);
