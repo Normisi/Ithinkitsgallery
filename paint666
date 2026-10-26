@@ -1,1 +1,56 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>ithinkitsgallery</title>
+  <link rel="stylesheet" href="yrellag.css">
+  <link rel="icon" href="https://www.image2url.com/r2/default/files/1791891289148-213d8eab-76f4-4e40-92f7-baf47205f2a0.ico" type="image/x-icon">
+  </head>
+<body>
+  <main>
+  <div class="recipe-page">
+    
+      <div class="back-wrapper">
+    <a href="yrellag.html" class="back-button">← Назад</a>
+  </div>
+   <div class="gallery-container">
+    <div class="gallery-image">
+      <img class="grassy" src="https://thumbs.dreamstime.com/z/halloween-127876315.jpg" alt="Картина">
+    </div>
 
+    <div class="gallery-info">
+      <h1>«Очень страшная картина»</h1>
+      <p><strong>Автор: человечество</strong> </p>
+      <p> это что кот в тыкве это что кот в тыкве неужели я прав это что котв тыкве о божечки это что кот вы тыкве тыква вы тыква тыква кот в тыкве как его там заперли он что умрёт этот кот умрёт вытащите кота из тыквы пожалуйста ну пожалуйста мне жалко кота кот в тыкве
+</p>
+    </div>
+  </div>
+  </main>
+ <div class="footer-btn" id="footerBtn">
+    ЖУТКОЕ Про нас
+  </div>
+
+ 
+  <div class="footer-overlay" id="footerOverlay">
+    <h2>твоя семья у меня в заложниках</h2>
+ 
+
+    <button id="closeFooter">Выдели текст сверху </button>
+  </div>
+  
+<script>
+
+  const footerBtn = document.getElementById("footerBtn");
+  const footerOverlay = document.getElementById("footerOverlay");
+  const closeBtn = document.getElementById("closeFooter");
+
+  footerBtn.addEventListener("click", () => {
+    footerOverlay.classList.add("active");
+  });
+
+  closeBtn.addEventListener("click", () => {
+    footerOverlay.classList.remove("active");
+  });
+</script>
+</body>
+</html>
