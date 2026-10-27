@@ -9,6 +9,11 @@
   </head>
 <body>
   <main>
+    <div id="gameKey" title="Зажми, чтобы схватить и бросить!">
+    <svg viewBox="0 0 100 100" width="100%" height="100%">
+        <path d="M35 10 A25 25 0 1 0 35 60 A25 25 0 1 0 35 10 Z M35 23 A12 12 0 1 1 35 47 A12 12 0 1 1 35 23 Z M45 30 L90 30 L90 45 L78 45 L78 37 L65 37 L65 48 L53 48 L53 35 Z" fill="#ffd700" stroke="#b8860b" stroke-width="3" stroke-linejoin="round"/>
+    </svg>
+</div>
   <div class="recipe-page">
     
       <div class="back-wrapper">
@@ -83,6 +88,144 @@ SsSsSsSsSsSsSs<br>SsSsSsSsSsSsSsSsSsSs<br>SsSsSsSsSsSsSsSsSsSsSsSsSsSsSsSsS<br>s
     closeBtn.addEventListener("click", () => {
       footerOverlay.classList.remove("active");
     });
+  (function initPhysicsKey() {
+    const key = document.getElementById("gameKey");
+    if (!key) return;
+
+   
+    let x = parseFloat(localStorage.getItem("keyX")) || (window.innerWidth / 2 - 35);
+    let y = parseFloat(localStorage.getItem("keyY")) || 50;
+    let vx = 0;
+    let vy = 0;
+    let isDragging = false;
+    let lastMouseX = 0;
+    let lastMouseY = 0;
+
+    const gravity = 0.6;      
+    const bounce = -0.55;    
+    const friction = 0.98;   
+
+   
+    function updatePosition() {
+        key.style.transform = `translate(${x}px, ${y}px)`;
+    }
+
+   
+    function saveState() {
+        localStorage.setItem("keyX", x);
+        localStorage.setItem("keyY", y);
+    }
+
+   
+    function physicsLoop() {
+        if (!isDragging) {
+            vy += gravity; 
+            vx *= friction;
+            vy *= friction;
+
+            x += vx;
+            y += vy;
+
+            const keyWidth = 45;
+            const keyHeight = 45;
+
+           
+            if (y + keyHeight > window.innerHeight) {
+                y = window.innerHeight - keyHeight;
+                vy *= bounce;
+                vx *= 0.8; 
+            }
+           
+            if (y < 0) {
+                y = 0;
+                vy *= bounce;
+            }
+           
+            if (x + keyWidth > window.innerWidth) {
+                x = window.innerWidth - keyWidth;
+                vx *= bounce;
+            }
+            if (x < 0) {
+                x = 0;
+                vx *= bounce;
+            }
+
+            saveState();
+        }
+
+       
+        checkDoorUnlock();
+
+        updatePosition();
+        requestAnimationFrame(physicsLoop);
+    }
+
+   
+    function onStart(e) {
+        isDragging = true;
+        const pageX = e.touches ? e.touches[0].clientX : e.clientX;
+        const pageY = e.touches ? e.touches[0].clientY : e.clientY;
+        lastMouseX = pageX;
+        lastMouseY = pageY;
+        vx = 0;
+        vy = 0;
+    }
+
+    function onMove(e) {
+        if (!isDragging) return;
+        const pageX = e.touches ? e.touches[0].clientX : e.clientX;
+        const pageY = e.touches ? e.touches[0].clientY : e.clientY;
+
+        vx = pageX - lastMouseX;
+        vy = pageY - lastMouseY;
+
+        x += vx;
+        y += vy;
+
+        lastMouseX = pageX;
+        lastMouseY = pageY;
+    }
+
+    function onEnd() {
+        if (isDragging) {
+            isDragging = false;
+        }
+    }
+
+    key.addEventListener("mousedown", onStart);
+    window.addEventListener("mousemove", onMove);
+    window.addEventListener("mouseup", onEnd);
+
+    key.addEventListener("touchstart", onStart, { passive: false });
+    window.addEventListener("touchmove", onMove, { passive: false });
+    window.addEventListener("touchend", onEnd);
+
+  
+    function checkDoorUnlock() {
+        const door = document.querySelector(".door");
+        if (!door || localStorage.getItem("doorLocked") !== "true") return;
+
+        const doorRect = door.getBoundingClientRect();
+        const keyRect = key.getBoundingClientRect();
+
+
+        const overlap = !(keyRect.right < doorRect.left || 
+                          keyRect.left > doorRect.right || 
+                          keyRect.bottom < doorRect.top || 
+                          keyRect.top > doorRect.bottom);
+
+        if (overlap) {
+         
+            localStorage.setItem("doorLocked", "false");
+            
+       
+            alert("🔓 Вы открыли дверь ключом!");
+            location.reload();
+        }
+    }
+
+    physicsLoop();
+})();
   </script>
 </body>
 
