@@ -129,8 +129,8 @@ const loopGif = document.getElementById('loopGif');
 showGifBtn.addEventListener('click', () => {
   loopGif.classList.toggle('visible');
 });
+<script>
 (function initPhysicsKey() {
- 
     if (localStorage.getItem("keyUnlocked") !== "true") {
         const existingKey = document.getElementById("gameKey");
         if (existingKey) existingKey.style.display = "none";
@@ -140,7 +140,6 @@ showGifBtn.addEventListener('click', () => {
     const key = document.getElementById("gameKey");
     if (!key) return;
 
-   
     key.style.display = "block";
 
     let x = parseFloat(localStorage.getItem("keyX")) || (window.innerWidth / 2 - 15);
@@ -154,7 +153,7 @@ showGifBtn.addEventListener('click', () => {
     const gravity = 0.6;
     const bounce = -0.55;
     const friction = 0.98;
-    const floorOffset = 45;
+    const floorOffset = 40;
 
     function updatePosition() {
         key.style.transform = `translate(${x}px, ${y}px)`;
@@ -177,7 +176,6 @@ showGifBtn.addEventListener('click', () => {
             const keyWidth = 45;
             const keyHeight = 45;
 
-          
             if (y + keyHeight > window.innerHeight - floorOffset) {
                 y = window.innerHeight - floorOffset - keyHeight;
                 vy *= bounce;
@@ -265,6 +263,7 @@ showGifBtn.addEventListener('click', () => {
 
     physicsLoop();
 })();
+</script>
   </script>
 </body>
 
