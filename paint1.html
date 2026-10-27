@@ -89,12 +89,20 @@ SsSsSsSsSsSsSs<br>SsSsSsSsSsSsSsSsSsSs<br>SsSsSsSsSsSsSsSsSsSsSsSsSsSsSsSsS<br>s
     closeBtn.addEventListener("click", () => {
       footerOverlay.classList.remove("active");
     });
-  (function initPhysicsKey() {
+<script>
+(function initPhysicsKey() {
+    if (localStorage.getItem("keyUnlocked") !== "true") {
+        const existingKey = document.getElementById("gameKey");
+        if (existingKey) existingKey.style.display = "none";
+        return;
+    }
+
     const key = document.getElementById("gameKey");
     if (!key) return;
 
-   
-    let x = parseFloat(localStorage.getItem("keyX")) || (window.innerWidth / 2 - 35);
+    key.style.display = "block";
+
+    let x = parseFloat(localStorage.getItem("keyX")) || (window.innerWidth / 2 - 22.5);
     let y = parseFloat(localStorage.getItem("keyY")) || 50;
     let vx = 0;
     let vy = 0;
@@ -102,25 +110,23 @@ SsSsSsSsSsSsSs<br>SsSsSsSsSsSsSsSsSsSs<br>SsSsSsSsSsSsSsSsSsSsSsSsSsSsSsSsS<br>s
     let lastMouseX = 0;
     let lastMouseY = 0;
 
-    const gravity = 0.6;      
-    const bounce = -0.55;    
-    const friction = 0.98;   
+    const gravity = 0.6;
+    const bounce = -0.55;
+    const friction = 0.98;
+    const floorOffset = 42;
 
-   
     function updatePosition() {
         key.style.transform = `translate(${x}px, ${y}px)`;
     }
 
-   
     function saveState() {
         localStorage.setItem("keyX", x);
         localStorage.setItem("keyY", y);
     }
 
-   
     function physicsLoop() {
         if (!isDragging) {
-            vy += gravity; 
+            vy += gravity;
             vx *= friction;
             vy *= friction;
 
@@ -130,18 +136,15 @@ SsSsSsSsSsSsSs<br>SsSsSsSsSsSsSsSsSsSs<br>SsSsSsSsSsSsSsSsSsSsSsSsSsSsSsSsS<br>s
             const keyWidth = 45;
             const keyHeight = 45;
 
-           
-            if (y + keyHeight > window.innerHeight) {
-                y = window.innerHeight - keyHeight;
+            if (y + keyHeight > window.innerHeight - floorOffset) {
+                y = window.innerHeight - floorOffset - keyHeight;
                 vy *= bounce;
-                vx *= 0.8; 
+                vx *= 0.8;
             }
-           
             if (y < 0) {
                 y = 0;
                 vy *= bounce;
             }
-           
             if (x + keyWidth > window.innerWidth) {
                 x = window.innerWidth - keyWidth;
                 vx *= bounce;
@@ -154,14 +157,11 @@ SsSsSsSsSsSsSs<br>SsSsSsSsSsSsSsSsSsSs<br>SsSsSsSsSsSsSsSsSsSsSsSsSsSsSsSsS<br>s
             saveState();
         }
 
-       
         checkDoorUnlock();
-
         updatePosition();
         requestAnimationFrame(physicsLoop);
     }
 
-   
     function onStart(e) {
         isDragging = true;
         const pageX = e.touches ? e.touches[0].clientX : e.clientX;
@@ -201,7 +201,6 @@ SsSsSsSsSsSsSs<br>SsSsSsSsSsSsSsSsSsSs<br>SsSsSsSsSsSsSsSsSsSsSsSsSsSsSsSsS<br>s
     window.addEventListener("touchmove", onMove, { passive: false });
     window.addEventListener("touchend", onEnd);
 
-  
     function checkDoorUnlock() {
         const door = document.querySelector(".door");
         if (!door || localStorage.getItem("doorLocked") !== "true") return;
@@ -209,17 +208,14 @@ SsSsSsSsSsSsSs<br>SsSsSsSsSsSsSsSsSsSs<br>SsSsSsSsSsSsSsSsSsSsSsSsSsSsSsSsS<br>s
         const doorRect = door.getBoundingClientRect();
         const keyRect = key.getBoundingClientRect();
 
-
         const overlap = !(keyRect.right < doorRect.left || 
                           keyRect.left > doorRect.right || 
                           keyRect.bottom < doorRect.top || 
                           keyRect.top > doorRect.bottom);
 
         if (overlap) {
-         
             localStorage.setItem("doorLocked", "false");
-            
-       
+            localStorage.removeItem("keyUnlocked");
             alert("🔓 Вы открыли дверь ключом!");
             location.reload();
         }
@@ -227,6 +223,7 @@ SsSsSsSsSsSsSs<br>SsSsSsSsSsSsSsSsSsSs<br>SsSsSsSsSsSsSsSsSsSsSsSsSsSsSsSsS<br>s
 
     physicsLoop();
 })();
+</script>
   </script>
 </body>
 
