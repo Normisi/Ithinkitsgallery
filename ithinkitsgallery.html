@@ -133,7 +133,7 @@ showGifBtn.addEventListener('click', () => {
     const key = document.getElementById("gameKey");
     if (!key) return;
 
-    // Начальные параметры физики
+   
     let x = parseFloat(localStorage.getItem("keyX")) || (window.innerWidth / 2 - 35);
     let y = parseFloat(localStorage.getItem("keyY")) || 50;
     let vx = 0;
@@ -142,46 +142,46 @@ showGifBtn.addEventListener('click', () => {
     let lastMouseX = 0;
     let lastMouseY = 0;
 
-    const gravity = 0.6;      // Сила гравитации
-    const bounce = -0.55;     // Коэффициент отскока от пола/стен
-    const friction = 0.98;    // Трение воздуха
+    const gravity = 0.6;      
+    const bounce = -0.55;    
+    const friction = 0.98;   
 
-    // Обновляем позицию на экране
+   
     function updatePosition() {
         key.style.transform = `translate(${x}px, ${y}px)`;
     }
 
-    // Сохраняем в localStorage
+   
     function saveState() {
         localStorage.setItem("keyX", x);
         localStorage.setItem("keyY", y);
     }
 
-    // Основной цикл физики
+   
     function physicsLoop() {
         if (!isDragging) {
-            vy += gravity; // Гравитация тянет вниз
+            vy += gravity; 
             vx *= friction;
             vy *= friction;
 
             x += vx;
             y += vy;
 
-            const keyWidth = 30;
-            const keyHeight = 30;
+            const keyWidth = 45;
+            const keyHeight = 45;
 
-            // Столкновение с полом
+           
             if (y + keyHeight > window.innerHeight) {
                 y = window.innerHeight - keyHeight;
                 vy *= bounce;
-                vx *= 0.8; // Трение о пол
+                vx *= 0.8; 
             }
-            // Столкновение с потолком
+           
             if (y < 0) {
                 y = 0;
                 vy *= bounce;
             }
-            // Столкновение со стенами
+           
             if (x + keyWidth > window.innerWidth) {
                 x = window.innerWidth - keyWidth;
                 vx *= bounce;
@@ -194,14 +194,14 @@ showGifBtn.addEventListener('click', () => {
             saveState();
         }
 
-        // Проверка: поднесли ли ключ к двери (только на index.html)
+       
         checkDoorUnlock();
 
         updatePosition();
         requestAnimationFrame(physicsLoop);
     }
 
-    // Захват мышки/тача
+   
     function onStart(e) {
         isDragging = true;
         const pageX = e.touches ? e.touches[0].clientX : e.clientX;
@@ -217,7 +217,6 @@ showGifBtn.addEventListener('click', () => {
         const pageX = e.touches ? e.touches[0].clientX : e.clientX;
         const pageY = e.touches ? e.touches[0].clientY : e.clientY;
 
-        // Скорость броска вычисляется из движения мыши
         vx = pageX - lastMouseX;
         vy = pageY - lastMouseY;
 
@@ -242,7 +241,7 @@ showGifBtn.addEventListener('click', () => {
     window.addEventListener("touchmove", onMove, { passive: false });
     window.addEventListener("touchend", onEnd);
 
-    // Функция взаимодействия с дверью (открывает замок, если поднести ключ)
+  
     function checkDoorUnlock() {
         const door = document.querySelector(".door");
         if (!door || localStorage.getItem("doorLocked") !== "true") return;
@@ -250,17 +249,17 @@ showGifBtn.addEventListener('click', () => {
         const doorRect = door.getBoundingClientRect();
         const keyRect = key.getBoundingClientRect();
 
-        // Проверяем пересечение ключа и двери
+
         const overlap = !(keyRect.right < doorRect.left || 
                           keyRect.left > doorRect.right || 
                           keyRect.bottom < doorRect.top || 
                           keyRect.top > doorRect.bottom);
 
         if (overlap) {
-            // Разблокируем дверь!
+         
             localStorage.setItem("doorLocked", "false");
             
-            // Воспроизводим эффект/перезагружаем страницу или снимаем замок
+       
             alert("🔓 Вы открыли дверь ключом!");
             location.reload();
         }
