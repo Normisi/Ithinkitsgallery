@@ -60,11 +60,17 @@
 
     <div id="secretContent">
         <h2>🎉 ну ты и лох лол лмао 🎉</h2>
-        <img src="https://i.ibb.co/V0pV6YZc/image.png">
+        <button id="spawnKeyBtn">Получить ключ</button>
         </div>
 </div>
 
 <script>
+    document.getElementById("spawnKeyBtn").addEventListener("click", () => {
+   
+    localStorage.setItem("keyUnlocked", "true");
+    alert("Ключ где-то появился!");
+    location.reload();
+});
     const ingredients = ['мука', 'сахар', 'яйца', 'Яд'];
     const ingredientList = document.getElementById('ingredientList');
     const secretContent = document.getElementById('secretContent');
