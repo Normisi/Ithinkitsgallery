@@ -107,7 +107,7 @@
             vy += gravity;
             vx *= friction;
             vy *= friction;
-            vRot *= 0.95;
+            vRot *= 0.94; // Плавное затухание вращения в полете
 
             x += vx;
             y += vy;
@@ -116,25 +116,27 @@
             const keyWidth = 45;
             const keyHeight = 45;
 
+            // Столкновение с полом (с усиленной реакцией вращения от удара)
             if (y + keyHeight > window.innerHeight - floorOffset) {
                 y = window.innerHeight - floorOffset - keyHeight;
                 vy *= bounce;
-                vRot += vx * 0.4;
+                vRot += vx * 0.6 + (Math.abs(vy) * 0.2); // Закручивается при ударе о пол
             }
             if (y < 0) {
                 y = 0;
                 vy *= bounce;
                 vx *= 0.8;
             }
+            // Столкновение со стенами
             if (x + keyWidth > window.innerWidth) {
                 x = window.innerWidth - keyWidth;
                 vx *= bounce;
-                vRot -= vy * 0.4;
+                vRot -= vy * 0.5;
             }
             if (x < 0) {
                 x = 0;
                 vx *= bounce;
-                vRot += vy * 0.4;
+                vRot += vy * 0.5;
             }
 
             saveState();
@@ -165,12 +167,13 @@
         const moveX = pageX - lastMouseX;
         const moveY = pageY - lastMouseY;
 
+        // Фиксируем скорость для последующего броска
         vx = moveX;
         vy = moveY;
 
         let targetRot = moveX * 1.5;
         rot += (targetRot - rot) * 0.3;
-        vRot = moveX * 0.5;
+        vRot = moveX * 0.4;
 
         x += moveX;
         y += moveY;
@@ -182,6 +185,9 @@
     function onEnd() {
         if (isDragging) {
             isDragging = false;
+            // Ускорение броска (мультипликатор скорости при отпускании)
+            vx *= 1.2;
+            vy *= 1.2;
         }
     }
 
