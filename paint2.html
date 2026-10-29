@@ -74,25 +74,32 @@
     key.style.display = "block";
 
     let x = parseFloat(localStorage.getItem("keyX")) || (window.innerWidth / 2 - 22.5);
-    let y = parseFloat(localStorage.getItem("keyY")) || 50;
-    let vx = 0;
-    let vy = 0;
+    let y = parseFloat(localStorage.getItem("keyY")) || (window.innerHeight - 45 - 50);
+    let vx = parseFloat(localStorage.getItem("keyVX")) || 0;
+    let vy = parseFloat(localStorage.getItem("keyVY")) || 0;
+    let rot = parseFloat(localStorage.getItem("keyRot")) || 0;
+    let vRot = parseFloat(localStorage.getItem("keyVR")) || 0;
+
     let isDragging = false;
     let lastMouseX = 0;
     let lastMouseY = 0;
 
-    const gravity = 0.6;
+    const gravity = -0.6;
     const bounce = -0.55;
     const friction = 0.98;
     const floorOffset = 34;
 
     function updatePosition() {
-        key.style.transform = `translate(${x}px, ${y}px)`;
+        key.style.transform = `translate(${x}px, ${y}px) rotate(${rot}deg)`;
     }
 
     function saveState() {
         localStorage.setItem("keyX", x);
         localStorage.setItem("keyY", y);
+        localStorage.setItem("keyVX", vx);
+        localStorage.setItem("keyVY", vy);
+        localStorage.setItem("keyRot", rot);
+        localStorage.setItem("keyVR", vRot);
     }
 
     function physicsLoop() {
@@ -100,29 +107,35 @@
             vy += gravity;
             vx *= friction;
             vy *= friction;
+            vRot *= friction;
 
             x += vx;
             y += vy;
+            rot += vRot;
 
             const keyWidth = 45;
             const keyHeight = 45;
 
-            if (y + keyHeight > window.innerHeight - floorOffset) {
-                y = window.innerHeight - floorOffset - keyHeight;
-                vy *= bounce;
-                vx *= 0.8;
-            }
             if (y < 0) {
                 y = 0;
                 vy *= bounce;
+                vx *= 0.8;
+                vRot += vx * 0.5 + (Math.random() - 0.5) * 5;
+            }
+            if (y + keyHeight > window.innerHeight - floorOffset) {
+                y = window.innerHeight - floorOffset - keyHeight;
+                vy *= bounce;
+                vRot += vx * 0.5 + (Math.random() - 0.5) * 5;
             }
             if (x + keyWidth > window.innerWidth) {
                 x = window.innerWidth - keyWidth;
                 vx *= bounce;
+                vRot += vy * 0.5;
             }
             if (x < 0) {
                 x = 0;
                 vx *= bounce;
+                vRot -= vy * 0.5;
             }
 
             saveState();
@@ -141,6 +154,7 @@
         lastMouseY = pageY;
         vx = 0;
         vy = 0;
+        vRot = 0;
     }
 
     function onMove(e) {
@@ -150,9 +164,11 @@
 
         vx = pageX - lastMouseX;
         vy = pageY - lastMouseY;
+        vRot = vx * 0.8;
 
         x += vx;
         y += vy;
+        rot += vRot;
 
         lastMouseX = pageX;
         lastMouseY = pageY;
@@ -187,6 +203,12 @@
         if (overlap) {
             localStorage.setItem("doorLocked", "false");
             localStorage.removeItem("keyUnlocked");
+            localStorage.removeItem("keyX");
+            localStorage.removeItem("keyY");
+            localStorage.removeItem("keyRot");
+            localStorage.removeItem("keyVX");
+            localStorage.removeItem("keyVY");
+            localStorage.removeItem("keyVR");
             alert("🔓 Вы открыли дверь ключом!");
             location.reload();
         }
