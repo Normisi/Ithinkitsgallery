@@ -93,4 +93,20 @@ p span {
     z-index: 10000;
     box-shadow: 0 2px 5px rgba(0,0,0,0.2);
 }
+#gameKey {
+    position: fixed;
+    width: 45px !important;
+    height: 45px !important;
+    z-index: 10000000 !important; 
+    cursor: grab;
+    user-select: none;
+    touch-action: none;
+    filter: drop-shadow(0px 3px 6px rgba(0, 0, 0, 0.4));
+    top: 0;
+    left: 0;
+    will-change: transform;
+}
 
+#gameKey:active {
+    cursor: grabbing;
+}
