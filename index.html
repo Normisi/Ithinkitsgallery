@@ -7,6 +7,9 @@
 <title>I think its gallery</title>
 <link rel="stylesheet" href="style.css">
 <link rel="icon" href="https://www.image2url.com/r2/default/files/1792228874367-a244d3c1-7b45-4bf1-8479-37b12f2ae3ac.ico" type="image/x-icon">
+
+
+
 <!-- Google tag (gtag.js) -->
 <script async src="https://www.googletagmanager.com/gtag/js?id=G-TN85QTH5TS"></script>
 <script>
@@ -19,6 +22,9 @@
 
 </head>
 <body>
+
+<a href="leftroom.html" id="leftArrow" class="left-arrow-btn" title="Пойти налево">⬅</a>
+
 <div class="scene">
     <div class="ms"></div>
     <div class="doors">
@@ -27,25 +33,40 @@
 </div>
 <p id='n'></p>
     <div class="mobile-warning" id="mobileWarning">
-  ⚠️ Внимание! Вы идиот и решили запустить сайт не на компьютере. Для лучшего опыта рекомендуется использовать супер мега крутой компьютер. 
+   ⚠️ Внимание! Вы идиот и решили запустить сайт не на компьютере. Для лучшего опыта рекомендуется использовать супер мега крутой компьютер. 
 </div>
     <div class="site-warning">
-  Этот сайт является НЕ шуткой. Этот сайт АБСОЛЮТНО серьёзен и всё что написано в этом сайте это ПРАВДА. Нажмите на дверь чтобы начать
+   Этот сайт является НЕ шуткой. Этот сайт АБСОЛЮТНО серьёзен и всё что написано в этом сайте это ПРАВДА. Нажмите на дверь чтобы начать
 </div>
 <script>
 const door = document.querySelector(".door");
 const scene = document.querySelector(".scene");
-let p = document.getElementById("n")
-let q = ['"Меня съел олень - Помогите"','Привет Пивку остальным соболезную','"    " - Немой человек','"Мне нравятся картины, я очень обожаю картины, картины мне нравятся, я люблю картины, я смотрю на все картины, этот сайт про картины" - человек (возможно)','"Картины это очень глубоко идея кросовки сегодня скачать" - Си Гма','"Искусство заменить это как ручка ложка съесть" - Скиб Идист', '"Если вашу картину критикуют, станцуйте брейкданс" - Яза Был', '"купи слона" - мявченко', '"Если ваши друзья ночь, будьте день" Мардцанікоченогелшкірабра', '"если" - народная мудрость','ты крутой:3']
-p.innerText = q[Math.floor(Math.random() * q.length)]
+let p = document.getElementById("n");
+let q = ['"Меня съел олень - Помогите"','Привет Пивку остальным соболезную','"    " - Немой человек','"Мне нравятся картины, я очень обожаю картины, картины мне нравятся, я люблю картины, я смотрю на все картины, этот сайт про картины" - человек (возможно)','"Картины это очень глубоко идея кросовки сегодня скачать" - Си Гма','"Искусство заменить это как ручка ложка съесть" - Скиб Идист', '"Если вашу картину критикуют, станцуйте брейкданс" - Яза Был', '"купи слона" - мявченко', '"Если ваши друзья ночь, будьте день" Мардцанікоченогелшкірабра', '"если" - народная мудрость','ты крутой:3'];
+p.innerText = q[Math.floor(Math.random() * q.length)];
 wave(p, 8, 0.2, 0.05);
 
-door.addEventListener("click", () => {
-    
-    door.style.animation = "open 0.8s ease forwards";
-    p.style.opacity = '0'
 
-   
+document.addEventListener('DOMContentLoaded', () => {
+    if (localStorage.getItem("turpkaUnlocked") === "true") {
+        const leftArrow = document.getElementById("leftArrow");
+        if (leftArrow) {
+            leftArrow.style.display = "block";
+        }
+    }
+
+    const mobileWarning = document.getElementById('mobileWarning');
+    if (window.innerWidth < 768) {
+        mobileWarning.style.display = 'block';
+    } else {
+        mobileWarning.style.display = 'none';
+    }
+});
+
+door.addEventListener("click", () => {
+    door.style.animation = "open 0.8s ease forwards";
+    p.style.opacity = '0';
+
     setTimeout(() => {
         scene.style.transition = "1s ease";
         scene.style.transform = "scale(5)";
@@ -75,22 +96,9 @@ function wave(p, a = 10, f = 0.05, s = 0.05) {
     }
     animate();
 }
-    document.addEventListener('DOMContentLoaded', (event) => {
-    const mobileWarning = document.getElementById('mobileWarning');
-    
-   
-    if (window.innerWidth < 768) {
-        mobileWarning.style.display = 'block';
-    } else {
-        mobileWarning.style.display = 'none';
-    }
-});
 </script>
 </body>
 </html>
-
-
-
 
 
 
