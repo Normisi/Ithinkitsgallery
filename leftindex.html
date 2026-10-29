@@ -9,7 +9,6 @@
 <link rel="icon" href="https://www.image2url.com/r2/default/files/1792228874367-a244d3c1-7b45-4bf1-8479-37b12f2ae3ac.ico" type="image/x-icon">
 
 <style>
-
 .right-arrow-btn {
     display: none;
     position: fixed;
@@ -36,13 +35,11 @@
 }
 </style>
 
-<!-- Google tag (gtag.js) -->
 <script async src="https://www.googletagmanager.com/gtag/js?id=G-TN85QTH5TS"></script>
 <script>
   window.dataLayer = window.dataLayer || [];
   function gtag(){dataLayer.push(arguments);}
   gtag('js', new Date());
-
   gtag('config', 'G-TN85QTH5TS');
 </script>
 
@@ -56,6 +53,7 @@
         </g>
     </svg>
 </div>
+
 <a href="index.html" id="rightArrow" class="right-arrow-btn" title="Пойти направо">➡</a>
 
 <div class="scene">
@@ -79,12 +77,11 @@ let q = ['"Я съел человека" - Олень','У тебя же нет�
 p.innerText = q[Math.floor(Math.random() * q.length)];
 wave(p, 8, 0.2, 0.05);
 
-
 document.addEventListener('DOMContentLoaded', () => {
     if (localStorage.getItem("turpkaUnlocked") === "true") {
-        const leftArrow = document.getElementById("leftArrow");
-        if (leftArrow) {
-            leftArrow.style.display = "block";
+        const rightArrow = document.getElementById("rightArrow");
+        if (rightArrow) {
+            rightArrow.style.display = "block";
         }
     }
 
@@ -129,7 +126,8 @@ function wave(p, a = 10, f = 0.05, s = 0.05) {
     }
     animate();
 }
-    (function initPhysicsKey() {
+
+(function initPhysicsKey() {
     if (localStorage.getItem("keyUnlocked") !== "true") {
         const existingKey = document.getElementById("gameKey");
         if (existingKey) existingKey.style.display = "none";
@@ -175,8 +173,6 @@ function wave(p, a = 10, f = 0.05, s = 0.05) {
             vy += gravity;
             vx *= friction;
             vy *= friction;
-            
-
             vRot *= 0.85;
 
             x += vx;
@@ -196,7 +192,6 @@ function wave(p, a = 10, f = 0.05, s = 0.05) {
                 vy *= bounce;
                 vx *= 0.8;
             }
-            // Столкновение со стенами
             if (x + keyWidth > window.innerWidth) {
                 x = window.innerWidth - keyWidth;
                 vx *= bounce;
