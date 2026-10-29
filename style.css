@@ -93,3 +93,25 @@ p span {
     z-index: 10000;
     box-shadow: 0 2px 5px rgba(0,0,0,0.2);
 }
+    .left-arrow-btn {
+        display: none;
+        position: fixed;
+        left: 20px;
+        top: 50%;
+        transform: translateY(-50%);
+        z-index: 10000;
+        background: rgba(0, 0, 0, 0.7);
+        color: #ffd700;
+        border: 2px solid #ffd700;
+        padding: 15px 20px;
+        font-size: 30px;
+        border-radius: 12px;
+        cursor: pointer;
+        text-decoration: none;
+        box-shadow: 0 0 15px rgba(255, 215, 0, 0.4);
+        transition: transform 0.2s, background 0.2s;
+    }
+    .left-arrow-btn:hover {
+        transform: translateY(-50%) scale(1.1);
+        background: rgba(50, 50, 50, 0.9);
+    }
