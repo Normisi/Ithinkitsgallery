@@ -1,11 +1,40 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <title>ithinkitsIronMaks2005world</title>
-    <link rel="stylesheet" href="Ironmaks2005world.css">
-    <link rel="icon" href="https://i.postimg.cc/FFVQZ96R/1da275b7-3322-46fa-b533-713d95eeca39.png" type="image/x-icon">
-     <!-- Google tag (gtag.js) -->
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="description" content="Это очень галерея. Тут много секретов и смешных вещей. Наверное.">
+<title>I think its gallery</title>
+<link rel="stylesheet" href="style.css">
+<link rel="icon" href="https://www.image2url.com/r2/default/files/1792228874367-a244d3c1-7b45-4bf1-8479-37b12f2ae3ac.ico" type="image/x-icon">
+
+<style>
+
+    .left-arrow-btn {
+        display: none;
+        position: fixed;
+        left: 20px;
+        top: 50%;
+        transform: translateY(-50%);
+        z-index: 10000;
+        background: rgba(0, 0, 0, 0.7);
+        color: #ffd700;
+        border: 2px solid #ffd700;
+        padding: 15px 20px;
+        font-size: 30px;
+        border-radius: 12px;
+        cursor: pointer;
+        text-decoration: none;
+        box-shadow: 0 0 15px rgba(255, 215, 0, 0.4);
+        transition: transform 0.2s, background 0.2s;
+    }
+    .left-arrow-btn:hover {
+        transform: translateY(-50%) scale(1.1);
+        background: rgba(50, 50, 50, 0.9);
+    }
+</style>
+
+<!-- Google tag (gtag.js) -->
 <script async src="https://www.googletagmanager.com/gtag/js?id=G-TN85QTH5TS"></script>
 <script>
   window.dataLayer = window.dataLayer || [];
@@ -14,127 +43,84 @@
 
   gtag('config', 'G-TN85QTH5TS');
 </script>
+
 </head>
 <body>
-<header>
-    <h1> пр. это мир Ирона Макса 2005 (приблизь очень сильно, прям очнь очнь ты увидишь ирона макса 2005)</h1>
-</header>
-<div class="sigma">
-    <h1> Мне кажется число 777 очень важное число, и его надо вписать куда-то на этой странице. я не знаю куда. ну я реально не знаю. блин ну я не знаю реально не знаю ноль идеек.</h1>
 
+
+<a href="leftroom.html" id="leftArrow" class="left-arrow-btn" title="Пойти налево">⬅</a>
+
+<div class="scene">
+    <div class="ms"></div>
+    <div class="doors">
+        <img class="door" draggable="false" src="https://pngimg.com/uploads/door/door_PNG17601.png">
+    </div>
 </div>
-<div class="NOTsigma">
-    <a href="hater.html">
-        нжми если ты НЕ фанат ирона макса 2005 (лохой человек) (ты не заслуживаешь страницы для тебя)
-    </a>
+<p id='n'></p>
+    <div class="mobile-warning" id="mobileWarning">
+   ⚠️ Внимание! Вы идиот и решили запустить сайт не на компьютере. Для лучшего опыта рекомендуется использовать супер мега крутой компьютер. 
 </div>
+    <div class="site-warning">
+   Этот сайт является НЕ шуткой. Этот сайт АБСОЛЮТНО серьёзен и всё что написано в этом сайте это ПРАВДА. Нажмите на дверь чтобы начать
+</div>
+<script>
+const door = document.querySelector(".door");
+const scene = document.querySelector(".scene");
+let p = document.getElementById("n");
+let q = ['"Меня съел олень - Помогите"','Привет Пивку остальным соболезную','"    " - Немой человек','"Мне нравятся картины, я очень обожаю картины, картины мне нравятся, я люблю картины, я смотрю на все картины, этот сайт про картины" - человек (возможно)','"Картины это очень глубоко идея кросовки сегодня скачать" - Си Гма','"Искусство заменить это как ручка ложка съесть" - Скиб Идист', '"Если вашу картину критикуют, станцуйте брейкданс" - Яза Был', '"купи слона" - мявченко', '"Если ваши друзья ночь, будьте день" Мардцанікоченогелшкірабра', '"если" - народная мудрость','ты крутой:3'];
+p.innerText = q[Math.floor(Math.random() * q.length)];
+wave(p, 8, 0.2, 0.05);
 
-<div class="sigma game-section">
-    <div id="lockedMessage">
-        <p>
-          тут ничего нет эм ну да прям ничего нету и тебе точно не надо решать загадку где-то там чтобы активировать тут игру да ну тебе ничего не надо делать просто ищи дальше тут ничего нету.
-        </p>
-    </div>
 
-    <div id="turpkaUnlocked" class="game-container">
-        <h2>Угадай Секретное Число (1-100)</h2>
-        <div class="controls">
-            <input type="number" id="guessInput" placeholder="Введите число..." min="1" max="100">
-            <button id="submitGuess">Проверить</button>
-        </div>
-        <p id="message">Сделайте первую попытку!</p>
-        <p id="attempts">Попыток: 0</p>
-    </div>
-    </div>
-<main>
-    <p> это пока всё((( больше контента будет чуть позже</p>
-</main>
-
-<script>document.addEventListener('DOMContentLoaded', () => {
- 
-    const gameSection = document.querySelector('.game-section'); 
-
-    if (localStorage.getItem('turpkaUnlocked') === 'true') {
-      
-        if (gameSection) {
-            gameSection.classList.add('unlocked');
+document.addEventListener('DOMContentLoaded', () => {
+    if (localStorage.getItem("turpkaUnlocked") === "true") {
+        const leftArrow = document.getElementById("leftArrow");
+        if (leftArrow) {
+            leftArrow.style.display = "block";
         }
-        
-       
-        initializeGameLogic();
-    } 
- 
+    }
+
+    const mobileWarning = document.getElementById('mobileWarning');
+    if (window.innerWidth < 768) {
+        mobileWarning.style.display = 'block';
+    } else {
+        mobileWarning.style.display = 'none';
+    }
 });
-function initializeGameLogic() {
-    
-    const input = document.getElementById('guessInput');
-    const button = document.getElementById('submitGuess');
-    const message = document.getElementById('message');
-    const attemptsDisplay = document.getElementById('attempts');
-    const gameContainer = document.getElementById('turpkaUnlocked');
-    
-    
-    const secretNumber = Math.floor(Math.random() * 100) + 1;
-    let attempts = 0;
 
-    function triggerCrash() {
-        gameContainer.classList.add('crash-mode');
-        input.disabled = true;
-        button.disabled = true;
-        
-        const specialText = `
-            <h2>Ты нашёл что-то крутое!!</h2>
-            <p>Вторая страница про ирона макса 2005! А теперь у меня вопрос к тебе. ЗАЧЕМ ты вписал 777 в игру где лимит это 100?</p>
-            <p>Нажмите, чтобы продолжить:</p>
-            <a href="https://normisi.github.io/Normis-time/" target="_blank" style="color: yellow; font-weight: bold;">
-                Нажмите чтобы скачать вирусы 
-            </a>
-            
-        `;
-        
-        gameContainer.innerHTML = specialText;
+door.addEventListener("click", () => {
+    door.style.animation = "open 0.8s ease forwards";
+    p.style.opacity = '0';
+
+    setTimeout(() => {
+        scene.style.transition = "1s ease";
+        scene.style.transform = "scale(5)";
+        scene.style.filter = "brightness(5) saturate(1)";
+        scene.style.opacity = '0';
+        setTimeout(() => { location.href = "ithinkitsgallery.html" }, 500)
+    }, 1050);
+})
+
+function wave(p, a = 10, f = 0.05, s = 0.05) {
+    const text = p.textContent;
+    p.textContent = '';
+    const spans = [];
+    for (let char of text) {
+        const span = document.createElement('span');
+        span.textContent = char;
+        p.appendChild(span);
+        spans.push(span);
     }
-
-    function checkGuess() {
-        const userGuess = parseInt(input.value);
-        
-        if (isNaN(userGuess)) {
-            message.textContent = 'Пожалуйста, введите корректное число.';
-            return;
-        }
-
-      
-        if (userGuess === 777) {
-            triggerCrash();
-            return; 
-        }
-
-        attempts++;
-        attemptsDisplay.textContent = `Попыток: ${attempts}`;
-        
-        if (userGuess === secretNumber) {
-            message.textContent = `🎉 ПОБЕДА! Вы продали свою семью за 5$ за ${attempts} попыток!`;
-            message.style.color = 'green';
-            input.disabled = true;
-            button.disabled = true;
-        } else if (userGuess < secretNumber) {
-            message.textContent = 'Слишком мало! Попробуйте число побольше.';
-            message.style.color = 'orange';
-        } else {
-            message.textContent = 'Слишком много! Попробуйте число поменьше.';
-            message.style.color = 'red';
-        }
-        
-        input.value = '';
+    let time = 0;
+    function animate() {
+        spans.forEach((span, i) => {
+            span.style.transform = `translateY(${Math.sin(time + i * f) * a}px)`;
+        });
+        time += s;
+        requestAnimationFrame(animate);
     }
-
- 
-    button.addEventListener('click', checkGuess);
-    input.addEventListener('keydown', (e) => {
-        if (e.key === 'Enter') {
-            checkGuess();
-        }
-    });
-}</script> 
+    animate();
+}
+</script>
 </body>
 </html>
