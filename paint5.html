@@ -101,7 +101,7 @@ La-la la la, la-la-la-la la la
       music.volume = volumeControl.value;
     });
 
- (function initPhysicsKey() {
+ ((function initPhysicsKey() {
     if (localStorage.getItem("keyUnlocked") !== "true") {
         const existingKey = document.getElementById("gameKey");
         if (existingKey) existingKey.style.display = "none";
@@ -168,7 +168,7 @@ La-la la la, la-la-la-la la la
                 vy *= bounce;
                 vx *= 0.8;
             }
-            // Столкновение со стенами
+        
             if (x + keyWidth > window.innerWidth) {
                 x = window.innerWidth - keyWidth;
                 vx *= bounce;
