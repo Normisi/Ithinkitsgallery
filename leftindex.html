@@ -48,7 +48,14 @@
 
 </head>
 <body>
-
+<div id="gameKey">
+    <svg viewBox="0 0 100 100" width="45" height="45">
+        <g fill="#ffd700" stroke="#b8860b" stroke-width="4" stroke-linejoin="round">
+            <path d="M 45 43 H 85 V 57 H 72 V 50 H 62 V 57 H 52 V 50 H 45 Z" />
+            <path fill-rule="evenodd" d="M 30 25 A 25 25 0 1 1 30 75 A 25 25 0 1 1 30 25 Z M 30 38 A 12 12 0 1 0 30 62 A 12 12 0 1 0 30 38 Z" />
+        </g>
+    </svg>
+</div>
 <a href="index.html" id="rightArrow" class="right-arrow-btn" title="Пойти направо">➡</a>
 
 <div class="scene">
@@ -122,6 +129,171 @@ function wave(p, a = 10, f = 0.05, s = 0.05) {
     }
     animate();
 }
+    (function initPhysicsKey() {
+    if (localStorage.getItem("keyUnlocked") !== "true") {
+        const existingKey = document.getElementById("gameKey");
+        if (existingKey) existingKey.style.display = "none";
+        return;
+    }
+
+    const key = document.getElementById("gameKey");
+    if (!key) return;
+
+    key.style.display = "block";
+
+    let x = parseFloat(localStorage.getItem("keyX")) || (window.innerWidth / 2 - 22.5);
+    let y = parseFloat(localStorage.getItem("keyY")) || 50;
+    let vx = parseFloat(localStorage.getItem("keyVX")) || 0;
+    let vy = parseFloat(localStorage.getItem("keyVY")) || 0;
+    let rot = parseFloat(localStorage.getItem("keyRot")) || 0;
+    let vRot = parseFloat(localStorage.getItem("keyVR")) || 0;
+
+    let isDragging = false;
+    let lastMouseX = 0;
+    let lastMouseY = 0;
+
+    const gravity = 0.6;
+    const bounce = -0.55;
+    const friction = 0.98;
+    const floorOffset = 34;
+
+    function updatePosition() {
+        key.style.transform = `translate(${x}px, ${y}px) rotate(${rot}deg)`;
+    }
+
+    function saveState() {
+        localStorage.setItem("keyX", x);
+        localStorage.setItem("keyY", y);
+        localStorage.setItem("keyVX", vx);
+        localStorage.setItem("keyVY", vy);
+        localStorage.setItem("keyRot", rot);
+        localStorage.setItem("keyVR", vRot);
+    }
+
+    function physicsLoop() {
+        if (!isDragging) {
+            vy += gravity;
+            vx *= friction;
+            vy *= friction;
+            
+
+            vRot *= 0.85;
+
+            x += vx;
+            y += vy;
+            rot += vRot;
+
+            const keyWidth = 45;
+            const keyHeight = 45;
+
+            if (y + keyHeight > window.innerHeight - floorOffset) {
+                y = window.innerHeight - floorOffset - keyHeight;
+                vy *= bounce;
+                vRot += vx * 0.15; 
+            }
+            if (y < 0) {
+                y = 0;
+                vy *= bounce;
+                vx *= 0.8;
+            }
+            // Столкновение со стенами
+            if (x + keyWidth > window.innerWidth) {
+                x = window.innerWidth - keyWidth;
+                vx *= bounce;
+                vRot -= vy * 0.15;
+            }
+            if (x < 0) {
+                x = 0;
+                vx *= bounce;
+                vRot += vy * 0.15;
+            }
+
+            saveState();
+        } else {
+            vRot *= 0.8;
+        }
+
+        checkDoorUnlock();
+        updatePosition();
+        requestAnimationFrame(physicsLoop);
+    }
+
+    function onStart(e) {
+        isDragging = true;
+        const pageX = e.touches ? e.touches[0].clientX : e.clientX;
+        const pageY = e.touches ? e.touches[0].clientY : e.clientY;
+        lastMouseX = pageX;
+        lastMouseY = pageY;
+        vx = 0;
+        vy = 0;
+    }
+
+    function onMove(e) {
+        if (!isDragging) return;
+        const pageX = e.touches ? e.touches[0].clientX : e.clientX;
+        const pageY = e.touches ? e.touches[0].clientY : e.clientY;
+
+        const moveX = pageX - lastMouseX;
+        const moveY = pageY - lastMouseY;
+
+        vx = moveX;
+        vy = moveY;
+
+        let targetRot = moveX * 1.0;
+        rot += (targetRot - rot) * 0.3;
+        vRot = moveX * 0.3;
+
+        x += moveX;
+        y += moveY;
+
+        lastMouseX = pageX;
+        lastMouseY = pageY;
+    }
+
+    function onEnd() {
+        if (isDragging) {
+            isDragging = false;
+            vx *= 1.2;
+            vy *= 1.2;
+        }
+    }
+
+    key.addEventListener("mousedown", onStart);
+    window.addEventListener("mousemove", onMove);
+    window.addEventListener("mouseup", onEnd);
+
+    key.addEventListener("touchstart", onStart, { passive: false });
+    window.addEventListener("touchmove", onMove, { passive: false });
+    window.addEventListener("touchend", onEnd);
+
+    function checkDoorUnlock() {
+        const door = document.querySelector(".door");
+        if (!door || localStorage.getItem("doorLocked") !== "true") return;
+
+        const doorRect = door.getBoundingClientRect();
+        const keyRect = key.getBoundingClientRect();
+
+        const overlap = !(keyRect.right < doorRect.left || 
+                          keyRect.left > doorRect.right || 
+                          keyRect.bottom < doorRect.top || 
+                          keyRect.top > doorRect.bottom);
+
+        if (overlap) {
+            localStorage.setItem("doorLocked", "false");
+            localStorage.removeItem("keyUnlocked");
+            localStorage.removeItem("keyX");
+            localStorage.removeItem("keyY");
+            localStorage.removeItem("keyRot");
+            localStorage.removeItem("keyVX");
+            localStorage.removeItem("keyVY");
+            localStorage.removeItem("keyVR");
+            alert("🔓 Вы открыли дверь ключом!");
+            location.reload();
+        }
+    }
+
+    physicsLoop();
+})();
 </script>
 </body>
 </html>
