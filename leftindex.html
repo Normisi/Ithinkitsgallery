@@ -46,13 +46,13 @@
 </head>
 <body>
 
-
 <a href="index.html" id="rightArrow" class="right-arrow-btn" title="Пойти направо">➡</a>
 
 <div class="scene">
     <div class="ms"></div>
     <div class="doors">
-        <img class="doorlocked" draggable="false" src="https://www.image2url.com/r2/default/files/1793301552619-9469f5f6-997d-4a3e-a19d-f0a2283b0cef.png">
+        <!-- Добавлен класс "door", чтобы скрипты могли корректно находить элемент -->
+        <img class="door doorlocked" draggable="false" src="https://www.image2url.com/r2/default/files/1793301552619-9469f5f6-997d-4a3e-a19d-f0a2283b0cef.png">
     </div>
 </div>
 <p id='n'></p>
@@ -70,6 +70,7 @@
         </g>
     </svg>
 </div>
+
 <script>
 const door = document.querySelector(".door");
 const scene = document.querySelector(".scene");
@@ -94,18 +95,20 @@ document.addEventListener('DOMContentLoaded', () => {
     }
 });
 
-door.addEventListener("click", () => {
-    door.style.animation = "open 0.8s ease forwards";
-    p.style.opacity = '0';
+if (door) {
+    door.addEventListener("click", () => {
+        door.style.animation = "open 0.8s ease forwards";
+        p.style.opacity = '0';
 
-    setTimeout(() => {
-        scene.style.transition = "1s ease";
-        scene.style.transform = "scale(5)";
-        scene.style.filter = "brightness(5) saturate(1)";
-        scene.style.opacity = '0';
-        setTimeout(() => { location.href = "ithinkitsgallery.html" }, 500)
-    }, 1050);
-})
+        setTimeout(() => {
+            scene.style.transition = "1s ease";
+            scene.style.transform = "scale(5)";
+            scene.style.filter = "brightness(5) saturate(1)";
+            scene.style.opacity = '0';
+            setTimeout(() => { location.href = "ithinkitsgallery.html" }, 500)
+        }, 1050);
+    });
+}
 
 function wave(p, a = 10, f = 0.05, s = 0.05) {
     const text = p.textContent;
@@ -140,8 +143,11 @@ function wave(p, a = 10, f = 0.05, s = 0.05) {
 
     key.style.display = "block";
 
-    let x = parseFloat(localStorage.getItem("keyX")) || (window.innerWidth / 2 - 22.5);
-    let y = parseFloat(localStorage.getItem("keyY")) || 50;
+    let storedX = parseFloat(localStorage.getItem("keyX"));
+    let storedY = parseFloat(localStorage.getItem("keyY"));
+
+    let x = (!isNaN(storedX)) ? storedX : (window.innerWidth / 2 - 22.5);
+    let y = (!isNaN(storedY)) ? storedY : 50;
     let vx = parseFloat(localStorage.getItem("keyVX")) || 0;
     let vy = parseFloat(localStorage.getItem("keyVY")) || 0;
     let rot = parseFloat(localStorage.getItem("keyRot")) || 0;
@@ -263,16 +269,16 @@ function wave(p, a = 10, f = 0.05, s = 0.05) {
     window.addEventListener("touchend", onEnd);
 
     function checkDoorUnlock() {
-        const door = document.querySelector(".door");
-        if (!door || localStorage.getItem("doorLocked") !== "true") return;
+        const targetDoor = document.querySelector(".door");
+        if (!targetDoor || localStorage.getItem("doorLocked") !== "true") return;
 
-        const doorRect = door.getBoundingClientRect();
+        const doorRect = targetDoor.getBoundingClientRect();
         const keyRect = key.getBoundingClientRect();
 
         const overlap = !(keyRect.right < doorRect.left || 
-                          keyRect.left > doorRect.right || 
-                          keyRect.bottom < doorRect.top || 
-                          keyRect.top > doorRect.bottom);
+                            keyRect.left > doorRect.right || 
+                            keyRect.bottom < doorRect.top || 
+                            keyRect.top > doorRect.bottom);
 
         if (overlap) {
             localStorage.setItem("doorLocked", "false");
