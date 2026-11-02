@@ -48,6 +48,17 @@
   </div>
   
 <script>
+    const footerBtn = document.getElementById("footerBtn");
+    const footerOverlay = document.getElementById("footerOverlay");
+    const closeBtn = document.getElementById("closeFooter");
+
+    footerBtn.addEventListener("click", () => {
+      footerOverlay.classList.add("active");
+    });
+
+    closeBtn.addEventListener("click", () => {
+      footerOverlay.classList.remove("active");
+    });
 
 (function initPhysicsKey() {
     if (localStorage.getItem("keyUnlocked") !== "true") {
