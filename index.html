@@ -96,19 +96,39 @@ document.addEventListener('DOMContentLoaded', () => {
     }
 });
 
-door.addEventListener("click", () => {
-    door.style.animation = "open 0.8s ease forwards";
-    p.style.opacity = '0';
+if (door) {
+    door.addEventListener("click", () => {
+        door.style.animation = "open 0.8s ease forwards";
+        p.style.opacity = '0';
 
-    setTimeout(() => {
-        scene.style.transition = "1s ease";
-        scene.style.transform = "scale(5)";
-        scene.style.filter = "brightness(5) saturate(1)";
-        scene.style.opacity = '0';
-        setTimeout(() => { location.href = "ithinkitsgallery.html" }, 500)
-    }, 1050);
-})
+        // Ждем 1 секунду перед началом побеления фона и скрытием элементов
+        setTimeout(() => {
+            scene.style.transition = "1s ease";
+            scene.style.transform = "scale(5)";
+            scene.style.filter = "brightness(5) saturate(1)";
+            scene.style.opacity = '0';
+            
+            // Скрываем стрелки, ключ и все предупреждения
+            const leftArrow = document.getElementById("leftArrow");
+            if (leftArrow) leftArrow.style.display = 'none';
 
+            const rightArrow = document.getElementById("rightArrow");
+            if (rightArrow) rightArrow.style.display = 'none';
+
+            const gameKey = document.getElementById("gameKey");
+            if (gameKey) gameKey.style.display = 'none';
+
+            const mobileWarning = document.getElementById("mobileWarning");
+            if (mobileWarning) mobileWarning.style.display = 'none';
+
+            const siteWarning = document.querySelector(".site-warning");
+            if (siteWarning) siteWarning.style.display = 'none';
+
+            // Переход на страницу галереи через 0.5с после начала эффекта
+            setTimeout(() => { location.href = "ithinkitsgallery.html" }, 500)
+        }, 1000);
+    });
+}
 function wave(p, a = 10, f = 0.05, s = 0.05) {
     const text = p.textContent;
     p.textContent = '';
