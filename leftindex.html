@@ -106,6 +106,10 @@ document.addEventListener('DOMContentLoaded', () => {
 
 if (door) {
     door.addEventListener("click", () => {
+        if (localStorage.getItem("doorLocked") === "true") {
+           
+            return; 
+        }
         door.style.animation = "open 0.8s ease forwards";
         p.style.opacity = '0';
 
@@ -130,7 +134,7 @@ if (door) {
             if (siteWarning) siteWarning.style.display = 'none';
 
            
-            setTimeout(() => { location.href = "ithinkitsgallery.html" }, 500)
+            setTimeout(() => { location.href = "ithinkitstheend.html" }, 500)
         }, 1000);
     });
 }
