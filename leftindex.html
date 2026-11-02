@@ -51,7 +51,7 @@
 <div class="scene">
     <div class="ms"></div>
     <div class="doors">
-        <!-- Добавлен класс "door", чтобы скрипты могли корректно находить элемент -->
+
         <img class="door doorlocked" draggable="false" src="https://www.image2url.com/r2/default/files/1793301552619-9469f5f6-997d-4a3e-a19d-f0a2283b0cef.png">
     </div>
 </div>
@@ -77,7 +77,7 @@ const scene = document.querySelector(".scene");
 let p = document.getElementById("n");
 let q = ['"Я съел человека" - Олень','У тебя же нету ключа чтобы открыть эту дверь?','Тебе тут не место. Вернись в галерею','"    " - Немой человек','"Ты зачем сюда пошёл" - человек (возможно)','"Картины это очень глубоко идея кросовки сегодня скачать" - Си Гма','"Искусство заменить это как ручка ложка съесть" - Скиб Идист', '"Если вашу картину критикуют, станцуйте брейкданс" - Яза Был', '"купи слона" - мявченко', '"Если ваши друзья ночь, будьте день" Мардцанікоченогелшкірабра', '"если" - народная мудрость','ты крутой:3'];
 p.innerText = q[Math.floor(Math.random() * q.length)];
-wave(p, 20, 1, 0.05);
+wave(p, 9, 10, 0.05);
 
 document.addEventListener('DOMContentLoaded', () => {
     if (localStorage.getItem("turpkaUnlocked") === "true") {
