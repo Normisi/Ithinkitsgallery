@@ -88,7 +88,12 @@ let q = ['Дверь заперта. Очень заперта. Дверь за�
 p.innerText = q[Math.floor(Math.random() * q.length)];
 wave(p, 30, 1, 0.4);
 
+
 document.addEventListener('DOMContentLoaded', () => {
+    if (localStorage.getItem("doorLocked") === null) {
+        localStorage.setItem("doorLocked", "true");
+    }
+
     if (localStorage.getItem("turpkaUnlocked") === "true") {
         const rightArrow = document.getElementById("rightArrow");
         if (rightArrow) {
@@ -106,21 +111,21 @@ document.addEventListener('DOMContentLoaded', () => {
 
 if (door) {
     door.addEventListener("click", () => {
+      
         if (localStorage.getItem("doorLocked") === "true") {
-           
+            alert("🔒 Дверь заперта! Найдите и перетащите на неё ключ.");
             return; 
         }
+
         door.style.animation = "open 0.8s ease forwards";
         p.style.opacity = '0';
 
-    
         setTimeout(() => {
             scene.style.transition = "1s ease";
             scene.style.transform = "scale(5)";
             scene.style.filter = "brightness(5) saturate(1)";
             scene.style.opacity = '0';
             
-          
             const rightArrow = document.getElementById("rightArrow");
             if (rightArrow) rightArrow.style.display = 'none';
 
@@ -133,7 +138,6 @@ if (door) {
             const siteWarning = document.querySelector(".site-warning");
             if (siteWarning) siteWarning.style.display = 'none';
 
-           
             setTimeout(() => { location.href = "ithinkitstheend.html" }, 500)
         }, 1000);
     });
@@ -159,7 +163,6 @@ function wave(p, a = 10, f = 0.05, s = 0.05) {
     }
     animate();
 }
-
 (function initPhysicsKey() {
     if (localStorage.getItem("keyUnlocked") !== "true") {
         const existingKey = document.getElementById("gameKey");
