@@ -100,13 +100,29 @@ if (door) {
         door.style.animation = "open 0.8s ease forwards";
         p.style.opacity = '0';
 
+    
         setTimeout(() => {
             scene.style.transition = "1s ease";
             scene.style.transform = "scale(5)";
             scene.style.filter = "brightness(5) saturate(1)";
             scene.style.opacity = '0';
+            
+          
+            const rightArrow = document.getElementById("rightArrow");
+            if (rightArrow) rightArrow.style.display = 'none';
+
+            const gameKey = document.getElementById("gameKey");
+            if (gameKey) gameKey.style.display = 'none';
+
+            const mobileWarning = document.getElementById("mobileWarning");
+            if (mobileWarning) mobileWarning.style.display = 'none';
+
+            const siteWarning = document.querySelector(".site-warning");
+            if (siteWarning) siteWarning.style.display = 'none';
+
+           
             setTimeout(() => { location.href = "ithinkitsgallery.html" }, 500)
-        }, 1050);
+        }, 1000);
     });
 }
 
