@@ -96,7 +96,7 @@ document.addEventListener('DOMContentLoaded', () => {
     }
 });
 
-if (door) {
+
     door.addEventListener("click", () => {
         door.style.animation = "open 0.8s ease forwards";
         p.style.opacity = '0';
@@ -128,7 +128,7 @@ if (door) {
             setTimeout(() => { location.href = "ithinkitsgallery.html" }, 500)
         }, 1000);
     });
-}
+
 function wave(p, a = 10, f = 0.05, s = 0.05) {
     const text = p.textContent;
     p.textContent = '';
